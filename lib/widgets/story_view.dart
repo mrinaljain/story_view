@@ -217,6 +217,9 @@ class StoryItem {
     Duration duration,
     BoxFit imageFit = BoxFit.fitWidth,
     String caption,
+    String tag,
+    String buttonText,
+    String videoCount,
     bool shown = false,
     Map<String, dynamic> requestHeaders,
   }) {
@@ -230,22 +233,101 @@ class StoryItem {
                 controller: controller,
                 requestHeaders: requestHeaders,
               ),
-              SafeArea(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(bottom: 24),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                    color:
-                        caption != null ? Colors.black54 : Colors.transparent,
-                    child: caption != null
-                        ? Text(
-                            caption,
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                            textAlign: TextAlign.center,
-                          )
-                        : SizedBox(),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Chip(
+                          label: Text(
+                            tag,
+                          ),
+                          // labelStyle: Theme.of(context).textTheme.headline6,
+                          labelPadding: EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 0.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 12.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4),
+                            ),
+                          ),
+                          backgroundColor: Color(0xfff1f1f1).withOpacity(0.3)),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 8,
+                          bottom: 16.0,
+                        ),
+                        child: caption != null
+                            ? Text(
+                                caption,
+                                style: const TextStyle(
+                                    color: const Color(0xffe0e0e0),
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: "NotoSans",
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 20.0),
+                                textAlign: TextAlign.center,
+                              )
+                            : SizedBox(),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          print('Clicked on Play Video');
+                        },
+                        color: Colors.transparent,
+                        shape: StadiumBorder(),
+                        padding: EdgeInsets.symmetric(horizontal: 0.0),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffc60c0c),
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: double.infinity,
+                              minHeight: 55.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.play_circle_fill_outlined,
+                                  size: 33,
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  children: [
+                                    Text(
+                                      buttonText,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Color(0xffe0e0e0),
+                                          fontWeight: FontWeight.w700,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 16.0),
+                                    ),
+                                    Text(videoCount,
+                                        style: TextStyle(
+                                            color: Color(0xffffffff),
+                                            fontWeight: FontWeight.w400,
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 12.0),
+                                        textAlign: TextAlign.center),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               )
@@ -625,8 +707,8 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
               // we use SafeArea here for notched and bezeles phones
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+                  horizontal: 2,
+                  vertical: 0,
                 ),
                 child: PageBar(
                   widget.storyItems
@@ -702,6 +784,24 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
                   widget.controller.previous();
                 }),
                 width: 70),
+          ),
+          Positioned(
+            top: 16,
+            left: 12,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(
+                foregroundColor: Color(0xff000000).withOpacity(0.3),
+                radius: 30 / 2,
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Color(0xfff1f1f1),
+                  size: 17,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -813,11 +913,12 @@ class StoryProgressIndicator extends StatelessWidget {
         this.indicatorHeight,
       ),
       foregroundPainter: IndicatorOval(
-        Colors.white.withOpacity(0.8),
+        // Colors.white.withOpacity(0.8),
+        Color(0xffec1313),
         this.value,
       ),
       painter: IndicatorOval(
-        Colors.white.withOpacity(0.4),
+        Color(0xfff1f1f1).withOpacity(0.7),
         1.0,
       ),
     );
