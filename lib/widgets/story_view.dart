@@ -49,165 +49,165 @@ class StoryItem {
   ///
   /// Works for inline and full-page stories. See [StoryView.inline] for more on
   /// what inline/full-page means.
-  static StoryItem text({
-    @required String title,
-    @required Color backgroundColor,
-    TextStyle textStyle,
-    bool shown = false,
-    bool roundedTop = false,
-    bool roundedBottom = false,
-    Duration duration,
-  }) {
-    double contrast = ContrastHelper.contrast([
-      backgroundColor.red,
-      backgroundColor.green,
-      backgroundColor.blue,
-    ], [
-      255,
-      255,
-      255
-    ] /** white text */);
+  // static StoryItem text({
+  //   @required String title,
+  //   @required Color backgroundColor,
+  //   TextStyle textStyle,
+  //   bool shown = false,
+  //   bool roundedTop = false,
+  //   bool roundedBottom = false,
+  //   Duration duration,
+  // }) {
+  //   double contrast = ContrastHelper.contrast([
+  //     backgroundColor.red,
+  //     backgroundColor.green,
+  //     backgroundColor.blue,
+  //   ], [
+  //     255,
+  //     255,
+  //     255
+  //   ] /** white text */);
 
-    return StoryItem(
-      Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(roundedTop ? 8 : 0),
-            bottom: Radius.circular(roundedBottom ? 8 : 0),
-          ),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 16,
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: textStyle?.copyWith(
-                  color: contrast > 1.8 ? Colors.white : Colors.black,
-                ) ??
-                TextStyle(
-                  color: contrast > 1.8 ? Colors.white : Colors.black,
-                  fontSize: 18,
-                ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        //color: backgroundColor,
-      ),
-      shown: shown,
-      duration: duration ?? Duration(seconds: 3),
-    );
-  }
+  //   return StoryItem(
+  //     Container(
+  //       decoration: BoxDecoration(
+  //         color: backgroundColor,
+  //         borderRadius: BorderRadius.vertical(
+  //           top: Radius.circular(roundedTop ? 8 : 0),
+  //           bottom: Radius.circular(roundedBottom ? 8 : 0),
+  //         ),
+  //       ),
+  //       padding: EdgeInsets.symmetric(
+  //         horizontal: 24,
+  //         vertical: 16,
+  //       ),
+  //       child: Center(
+  //         child: Text(
+  //           title,
+  //           style: textStyle?.copyWith(
+  //                 color: contrast > 1.8 ? Colors.white : Colors.black,
+  //               ) ??
+  //               TextStyle(
+  //                 color: contrast > 1.8 ? Colors.white : Colors.black,
+  //                 fontSize: 18,
+  //               ),
+  //           textAlign: TextAlign.center,
+  //         ),
+  //       ),
+  //       //color: backgroundColor,
+  //     ),
+  //     shown: shown,
+  //     duration: duration ?? Duration(seconds: 3),
+  //   );
+  // }
 
   /// Factory constructor for page images. [controller] should be same instance as
   /// one passed to the `StoryView`
-  factory StoryItem.pageImage({
-    @required String url,
-    @required StoryController controller,
-    BoxFit imageFit = BoxFit.fitWidth,
-    String caption,
-    bool shown = false,
-    Map<String, dynamic> requestHeaders,
-    Duration duration,
-  }) {
-    return StoryItem(
-      Container(
-        color: Colors.black,
-        child: Stack(
-          children: <Widget>[
-            StoryImage.url(
-              url,
-              controller: controller,
-              fit: imageFit,
-              requestHeaders: requestHeaders,
-            ),
-            SafeArea(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                    bottom: 24,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 8,
-                  ),
-                  color: caption != null ? Colors.black54 : Colors.transparent,
-                  child: caption != null
-                      ? Text(
-                          caption,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
-                        )
-                      : SizedBox(),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-      shown: shown,
-      duration: duration ?? Duration(seconds: 3),
-    );
-  }
+  // factory StoryItem.pageImage({
+  //   @required String url,
+  //   @required StoryController controller,
+  //   BoxFit imageFit = BoxFit.fitWidth,
+  //   String caption,
+  //   bool shown = false,
+  //   Map<String, dynamic> requestHeaders,
+  //   Duration duration,
+  // }) {
+  //   return StoryItem(
+  //     Container(
+  //       color: Colors.black,
+  //       child: Stack(
+  //         children: <Widget>[
+  //           StoryImage.url(
+  //             url,
+  //             controller: controller,
+  //             fit: imageFit,
+  //             requestHeaders: requestHeaders,
+  //           ),
+  //           SafeArea(
+  //             child: Align(
+  //               alignment: Alignment.bottomCenter,
+  //               child: Container(
+  //                 width: double.infinity,
+  //                 margin: EdgeInsets.only(
+  //                   bottom: 24,
+  //                 ),
+  //                 padding: EdgeInsets.symmetric(
+  //                   horizontal: 24,
+  //                   vertical: 8,
+  //                 ),
+  //                 color: caption != null ? Colors.black54 : Colors.transparent,
+  //                 child: caption != null
+  //                     ? Text(
+  //                         caption,
+  //                         style: TextStyle(
+  //                           fontSize: 15,
+  //                           color: Colors.white,
+  //                         ),
+  //                         textAlign: TextAlign.center,
+  //                       )
+  //                     : SizedBox(),
+  //               ),
+  //             ),
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //     shown: shown,
+  //     duration: duration ?? Duration(seconds: 3),
+  //   );
+  // }
 
-  /// Shorthand for creating inline image. [controller] should be same instance as
-  /// one passed to the `StoryView`
-  factory StoryItem.inlineImage({
-    @required String url,
-    @required Text caption,
-    @required StoryController controller,
-    BoxFit imageFit = BoxFit.cover,
-    Map<String, dynamic> requestHeaders,
-    bool shown = false,
-    bool roundedTop = true,
-    bool roundedBottom = false,
-    Duration duration,
-  }) {
-    return StoryItem(
-      ClipRRect(
-        child: Container(
-          color: Colors.grey[100],
-          child: Container(
-            color: Colors.black,
-            child: Stack(
-              children: <Widget>[
-                StoryImage.url(
-                  url,
-                  controller: controller,
-                  fit: imageFit,
-                  requestHeaders: requestHeaders,
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 16),
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                      child: caption == null ? SizedBox() : caption,
-                      width: double.infinity,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(roundedTop ? 8 : 0),
-          bottom: Radius.circular(roundedBottom ? 8 : 0),
-        ),
-      ),
-      shown: shown,
-      duration: duration ?? Duration(seconds: 3),
-    );
-  }
+  // /// Shorthand for creating inline image. [controller] should be same instance as
+  // /// one passed to the `StoryView`
+  // factory StoryItem.inlineImage({
+  //   @required String url,
+  //   @required Text caption,
+  //   @required StoryController controller,
+  //   BoxFit imageFit = BoxFit.cover,
+  //   Map<String, dynamic> requestHeaders,
+  //   bool shown = false,
+  //   bool roundedTop = true,
+  //   bool roundedBottom = false,
+  //   Duration duration,
+  // }) {
+  //   return StoryItem(
+  //     ClipRRect(
+  //       child: Container(
+  //         color: Colors.grey[100],
+  //         child: Container(
+  //           color: Colors.black,
+  //           child: Stack(
+  //             children: <Widget>[
+  //               StoryImage.url(
+  //                 url,
+  //                 controller: controller,
+  //                 fit: imageFit,
+  //                 requestHeaders: requestHeaders,
+  //               ),
+  //               Container(
+  //                 margin: EdgeInsets.only(bottom: 16),
+  //                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+  //                 child: Align(
+  //                   alignment: Alignment.bottomLeft,
+  //                   child: Container(
+  //                     child: caption == null ? SizedBox() : caption,
+  //                     width: double.infinity,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       borderRadius: BorderRadius.vertical(
+  //         top: Radius.circular(roundedTop ? 8 : 0),
+  //         bottom: Radius.circular(roundedBottom ? 8 : 0),
+  //       ),
+  //     ),
+  //     shown: shown,
+  //     duration: duration ?? Duration(seconds: 3),
+  //   );
+  // }
 
   /// Shorthand for creating page video. [controller] should be same instance as
   /// one passed to the `StoryView`
@@ -220,6 +220,7 @@ class StoryItem {
     String tag,
     String buttonText,
     String videoCount,
+    Function goToConsumption,
     bool shown = false,
     Map<String, dynamic> requestHeaders,
   }) {
@@ -238,7 +239,7 @@ class StoryItem {
                 left: 0,
                 right: 0,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12),
+                  padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -246,14 +247,18 @@ class StoryItem {
                           label: Text(
                             tag,
                           ),
-                          // labelStyle: Theme.of(context).textTheme.headline6,
+                          labelStyle: TextStyle(
+                            color: const Color(0xfff1f1f1),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10.0,
+                          ),
                           labelPadding: EdgeInsets.symmetric(
                               vertical: 0.0, horizontal: 0.0),
                           padding: EdgeInsets.symmetric(
                               vertical: 0.0, horizontal: 12.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                              Radius.circular(4),
+                              Radius.circular(6),
                             ),
                           ),
                           backgroundColor: Color(0xfff1f1f1).withOpacity(0.3)),
@@ -269,7 +274,6 @@ class StoryItem {
                                     color: const Color(0xffe0e0e0),
                                     fontWeight: FontWeight.w700,
                                     fontFamily: "NotoSans",
-                                    fontStyle: FontStyle.normal,
                                     fontSize: 20.0),
                                 textAlign: TextAlign.center,
                               )
@@ -278,6 +282,7 @@ class StoryItem {
                       RaisedButton(
                         onPressed: () {
                           print('Clicked on Play Video');
+                          goToConsumption();
                         },
                         color: Colors.transparent,
                         shape: StadiumBorder(),
@@ -317,7 +322,6 @@ class StoryItem {
                                         style: TextStyle(
                                             color: Color(0xffffffff),
                                             fontWeight: FontWeight.w400,
-                                            fontStyle: FontStyle.normal,
                                             fontSize: 12.0),
                                         textAlign: TextAlign.center),
                                   ],
@@ -341,105 +345,105 @@ class StoryItem {
   /// Shorthand for creating a story item from an image provider such as `AssetImage`
   /// or `NetworkImage`. However, the story continues to play while the image loads
   /// up.
-  factory StoryItem.pageProviderImage(
-    ImageProvider image, {
-    BoxFit imageFit = BoxFit.fitWidth,
-    String caption,
-    bool shown = false,
-    Duration duration,
-  }) {
-    assert(imageFit != null, "[imageFit] should not be null");
-    return StoryItem(
-        Container(
-          color: Colors.black,
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Image(
-                  image: image,
-                  height: double.infinity,
-                  width: double.infinity,
-                  fit: imageFit,
-                ),
-              ),
-              SafeArea(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(
-                      bottom: 24,
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 8,
-                    ),
-                    color:
-                        caption != null ? Colors.black54 : Colors.transparent,
-                    child: caption != null
-                        ? Text(
-                            caption,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        : SizedBox(),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        shown: shown,
-        duration: duration ?? Duration(seconds: 3));
-  }
+  // factory StoryItem.pageProviderImage(
+  //   ImageProvider image, {
+  //   BoxFit imageFit = BoxFit.fitWidth,
+  //   String caption,
+  //   bool shown = false,
+  //   Duration duration,
+  // }) {
+  //   assert(imageFit != null, "[imageFit] should not be null");
+  //   return StoryItem(
+  //       Container(
+  //         color: Colors.black,
+  //         child: Stack(
+  //           children: <Widget>[
+  //             Center(
+  //               child: Image(
+  //                 image: image,
+  //                 height: double.infinity,
+  //                 width: double.infinity,
+  //                 fit: imageFit,
+  //               ),
+  //             ),
+  //             SafeArea(
+  //               child: Align(
+  //                 alignment: Alignment.bottomCenter,
+  //                 child: Container(
+  //                   width: double.infinity,
+  //                   margin: EdgeInsets.only(
+  //                     bottom: 24,
+  //                   ),
+  //                   padding: EdgeInsets.symmetric(
+  //                     horizontal: 24,
+  //                     vertical: 8,
+  //                   ),
+  //                   color:
+  //                       caption != null ? Colors.black54 : Colors.transparent,
+  //                   child: caption != null
+  //                       ? Text(
+  //                           caption,
+  //                           style: TextStyle(
+  //                             fontSize: 15,
+  //                             color: Colors.white,
+  //                           ),
+  //                           textAlign: TextAlign.center,
+  //                         )
+  //                       : SizedBox(),
+  //                 ),
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //       shown: shown,
+  //       duration: duration ?? Duration(seconds: 3));
+  // }
 
   /// Shorthand for creating an inline story item from an image provider such as `AssetImage`
   /// or `NetworkImage`. However, the story continues to play while the image loads
   /// up.
-  factory StoryItem.inlineProviderImage(
-    ImageProvider image, {
-    Text caption,
-    bool shown = false,
-    bool roundedTop = true,
-    bool roundedBottom = false,
-    Duration duration,
-  }) {
-    return StoryItem(
-      Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(roundedTop ? 8 : 0),
-              bottom: Radius.circular(roundedBottom ? 8 : 0),
-            ),
-            image: DecorationImage(
-              image: image,
-              fit: BoxFit.cover,
-            )),
-        child: Container(
-          margin: EdgeInsets.only(
-            bottom: 16,
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: 8,
-          ),
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              child: caption == null ? SizedBox() : caption,
-              width: double.infinity,
-            ),
-          ),
-        ),
-      ),
-      shown: shown,
-      duration: duration ?? Duration(seconds: 3),
-    );
-  }
+  // factory StoryItem.inlineProviderImage(
+  //   ImageProvider image, {
+  //   Text caption,
+  //   bool shown = false,
+  //   bool roundedTop = true,
+  //   bool roundedBottom = false,
+  //   Duration duration,
+  // }) {
+  //   return StoryItem(
+  //     Container(
+  //       decoration: BoxDecoration(
+  //           color: Colors.grey[100],
+  //           borderRadius: BorderRadius.vertical(
+  //             top: Radius.circular(roundedTop ? 8 : 0),
+  //             bottom: Radius.circular(roundedBottom ? 8 : 0),
+  //           ),
+  //           image: DecorationImage(
+  //             image: image,
+  //             fit: BoxFit.cover,
+  //           )),
+  //       child: Container(
+  //         margin: EdgeInsets.only(
+  //           bottom: 16,
+  //         ),
+  //         padding: EdgeInsets.symmetric(
+  //           horizontal: 24,
+  //           vertical: 8,
+  //         ),
+  //         child: Align(
+  //           alignment: Alignment.bottomLeft,
+  //           child: Container(
+  //             child: caption == null ? SizedBox() : caption,
+  //             width: double.infinity,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //     shown: shown,
+  //     duration: duration ?? Duration(seconds: 3),
+  //   );
+  // }
 }
 
 /// Widget to display stories just like Whatsapp and Instagram. Can also be used
@@ -694,7 +698,9 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      width: double.infinity,
+      // padding: EdgeInsets.only(bottom: 52),
+      color: Colors.red,
       child: Stack(
         children: <Widget>[
           _currentView,
@@ -723,67 +729,73 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
               ),
             ),
           ),
-          Align(
-              alignment: Alignment.centerRight,
-              heightFactor: 1,
-              child: GestureDetector(
-                onTapDown: (details) {
-                  widget.controller.pause();
-                },
-                onTapCancel: () {
-                  widget.controller.play();
-                },
-                onTapUp: (details) {
-                  // if debounce timed out (not active) then continue anim
-                  if (_nextDebouncer?.isActive == false) {
+          Container(
+            margin: EdgeInsets.only(bottom: 52),
+            child: Align(
+                alignment: Alignment.centerRight,
+                heightFactor: 1,
+                child: GestureDetector(
+                  onTapDown: (details) {
+                    widget.controller.pause();
+                  },
+                  onTapCancel: () {
                     widget.controller.play();
-                  } else {
-                    widget.controller.next();
-                  }
-                },
-                onVerticalDragStart: widget.onVerticalSwipeComplete == null
-                    ? null
-                    : (details) {
-                        widget.controller.pause();
-                      },
-                onVerticalDragCancel: widget.onVerticalSwipeComplete == null
-                    ? null
-                    : () {
-                        widget.controller.play();
-                      },
-                onVerticalDragUpdate: widget.onVerticalSwipeComplete == null
-                    ? null
-                    : (details) {
-                        if (verticalDragInfo == null) {
-                          verticalDragInfo = VerticalDragInfo();
-                        }
+                  },
+                  onTapUp: (details) {
+                    // if debounce timed out (not active) then continue anim
+                    if (_nextDebouncer?.isActive == false) {
+                      widget.controller.play();
+                    } else {
+                      widget.controller.next();
+                    }
+                  },
+                  onVerticalDragStart: widget.onVerticalSwipeComplete == null
+                      ? null
+                      : (details) {
+                          widget.controller.pause();
+                        },
+                  onVerticalDragCancel: widget.onVerticalSwipeComplete == null
+                      ? null
+                      : () {
+                          widget.controller.play();
+                        },
+                  onVerticalDragUpdate: widget.onVerticalSwipeComplete == null
+                      ? null
+                      : (details) {
+                          if (verticalDragInfo == null) {
+                            verticalDragInfo = VerticalDragInfo();
+                          }
 
-                        verticalDragInfo.update(details.primaryDelta);
+                          verticalDragInfo.update(details.primaryDelta);
 
-                        // TODO: provide callback interface for animation purposes
-                      },
-                onVerticalDragEnd: widget.onVerticalSwipeComplete == null
-                    ? null
-                    : (details) {
-                        widget.controller.play();
-                        // finish up drag cycle
-                        if (!verticalDragInfo.cancel &&
-                            widget.onVerticalSwipeComplete != null) {
-                          widget.onVerticalSwipeComplete(
-                              verticalDragInfo.direction);
-                        }
+                          // TODO: provide callback interface for animation purposes
+                        },
+                  onVerticalDragEnd: widget.onVerticalSwipeComplete == null
+                      ? null
+                      : (details) {
+                          widget.controller.play();
+                          // finish up drag cycle
+                          if (!verticalDragInfo.cancel &&
+                              widget.onVerticalSwipeComplete != null) {
+                            widget.onVerticalSwipeComplete(
+                                verticalDragInfo.direction);
+                          }
 
-                        verticalDragInfo = null;
-                      },
-              )),
-          Align(
-            alignment: Alignment.centerLeft,
-            heightFactor: 1,
-            child: SizedBox(
-                child: GestureDetector(onTap: () {
-                  widget.controller.previous();
-                }),
-                width: 70),
+                          verticalDragInfo = null;
+                        },
+                )),
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: 52),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              heightFactor: 1,
+              child: SizedBox(
+                  child: GestureDetector(onTap: () {
+                    widget.controller.previous();
+                  }),
+                  width: 70),
+            ),
           ),
           Positioned(
             top: 16,
