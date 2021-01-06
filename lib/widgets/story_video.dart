@@ -138,6 +138,7 @@ class StoryVideoState extends State<StoryVideo> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 52),
       color: Colors.black,
       height: double.infinity,
       width: double.infinity,
