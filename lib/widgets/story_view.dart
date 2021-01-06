@@ -261,7 +261,7 @@ class StoryItem {
                               Radius.circular(6),
                             ),
                           ),
-                          backgroundColor: Color(0xfff1f1f1).withOpacity(0.3)),
+                          backgroundColor: Color(0xffc60c0c)),
                       Padding(
                         padding: EdgeInsets.only(
                           top: 8,
